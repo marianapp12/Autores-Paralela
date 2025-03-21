@@ -1,6 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 
+// añadir fetch y configurarlo globalmente
+const fetch = require('node-fetch')
+global.fetch = fetch;
+global.Headers = fetch.Headers;
+global.Response = fetch.Response;
+
 const app = express();
 app.use(cors());
 app.use(express.json());
