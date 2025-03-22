@@ -2,6 +2,7 @@
 const {initializeApp} = require("firebase/app");
 const {getAuth,signInWithEmailAndPassword,signOut,createUserWithEmailAndPassword} = require("firebase/auth");
 
+// conexion a base de datos
 const firebaseConfig = {
   apiKey: "AIzaSyDiZPZpR6SBiJSAWpXJkTcbmCXXcmU0oWo",
   authDomain: "paralela-750df.firebaseapp.com",
@@ -19,11 +20,9 @@ const signIn = signInWithEmailAndPassword;
 const logout = signOut;
 const signup = createUserWithEmailAndPassword
 
-
 module.exports = { 
     auth,
     signIn,
     logout,
     signup
 };
-

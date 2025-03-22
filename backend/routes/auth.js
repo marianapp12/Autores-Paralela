@@ -22,10 +22,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// ruta para el logout
 router.post("/logout", async (req, res) => {
   res.clearCookie("token"); // Si usas cookies
   res.json({ message: "Sesión cerrada correctamente" });
 });
-
 
 module.exports = router;
