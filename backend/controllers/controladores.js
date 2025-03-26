@@ -87,6 +87,169 @@ const getUsers = async (req, res) => {
   }
 };
 
+const createUsers = async (req, res) => {
+  const { username, password, tipo } = req.body;
 
+  try {
+    const passwordHash = await bcrypt.hash(password, 10);
 
-module.exports = { login, register, logout, getUsers }; //Exportar funciones
+    const newUser = new Usuario({
+      username,
+      password: passwordHash,
+      tipo,
+    });
+
+    const userSaved = await newUser.save();
+    res.json(userSaved);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+const updateUsers = async (req, res) => {
+  const { id } = req.params;
+  const { username, password, tipo } = req.body;
+
+  try {
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const userUpdated = await Usuario.findByIdAndUpdate(id, {
+      username,
+      password: passwordHash,
+      tipo,
+    });
+
+    res.json(userUpdated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+const deleteUsers = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Usuario.findByIdAndDelete(id);
+    res.json({ message: "Usuario Eliminado" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+/* autor */
+
+const getAutores = async (req, res) => {
+  try {
+    const autores = await Autor.find();
+    res.json(autores);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+const createAutores = async (req, res) => {
+  const { cedula, nombre_completo, nacionalidad } = req.body;
+
+  try {
+    const newAutor = new Autor({
+      cedula,
+      nombre_completo,
+      nacionalidad,
+    });
+
+    const autorSaved = await newAutor.save();
+    res.json(autorSaved);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+const updateAutores = async (req, res) => {
+  const { id } = req.params;
+  const { cedula, nombre_completo, nacionalidad } = req.body;
+
+  try {
+    const autorUpdated = await Autor.findByIdAndUpdate(id, {
+      cedula,
+      nombre_completo,
+      nacionalidad,
+    });
+
+    res.json(autorUpdated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+const deleteAutores = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Autor.findByIdAndDelete(id);
+    res.json({ message: "Autor Eliminado" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+/* libro */
+
+const getLibros = async (req, res) => {
+  try {
+    const libros = await Libro.find().populate('autor');
+    res.json(libros);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+const createLibros = async (req, res) => {
+  const { isbn, editorial, genero, anio_publicacion, autor } = req.body;
+
+  try {
+    const newLibro = new Libro({
+      isbn,
+      editorial,
+      genero,
+      anio_publicacion,
+      autor,
+    });
+
+    const libroSaved = await newLibro.save();
+    res.json(libroSaved);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+const updateLibros = async (req, res) => {
+  const { id } = req.params;
+  const { isbn, editorial, genero, anio_publicacion, autor } = req.body;
+
+  try {
+    const libroUpdated = await Libro.findByIdAndUpdate(id, {
+      isbn,
+      editorial,
+      genero,
+      anio_publicacion,
+      autor,
+    });
+
+    res.json(libroUpdated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+const deleteLibros = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Libro.findByIdAndDelete(id);
+    res.json({ message: "Libro Eliminado" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+module.exports = { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros }; //Exportar funciones
