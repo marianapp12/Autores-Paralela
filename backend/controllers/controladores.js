@@ -140,7 +140,7 @@ const deleteUsers = async (req, res) => {
 
 const getAutores = async (req, res) => {
   try {
-    const autores = await Autor.find();
+    const autores = await Autor.find().populate('libros');
     res.json(autores);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -216,6 +216,12 @@ const createLibros = async (req, res) => {
     });
 
     const libroSaved = await newLibro.save();
+
+    // Agregar el libro al autor
+    const autorFound = await Autor.findById(autor);
+    autorFound.libros.push(libroSaved);
+    await autorFound.save();
+
     res.json(libroSaved);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -252,4 +258,18 @@ const deleteLibros = async (req, res) => {
   }
 }
 
-module.exports = { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros }; //Exportar funciones
+// visualizar autores filtrando por cedula y mostrando que libros ha escrito
+const getAutorByCedula = async (req, res) => {
+
+  const { cedula } = req.params;
+
+  try {
+    const autor = await Autor.findOne({ cedula }).populate('libros');
+    res.json(autor);
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+module.exports = { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula }; //Exportar funciones

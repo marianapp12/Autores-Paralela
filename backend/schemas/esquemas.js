@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const AutorSchema = new mongoose.Schema({
     cedula: { type: String, required: true, unique: true },
     nombre_completo: { type: String, required: true},
-    nacionalidad: { type: String, required: true }
+    nacionalidad: { type: String, required: true },
+    libros: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Libro' }]
 });
 
 const Autor = mongoose.model('Autor', AutorSchema);
