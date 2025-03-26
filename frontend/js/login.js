@@ -1,14 +1,14 @@
 document.getElementById("loginForm").addEventListener("submit", async function (event) {
   event.preventDefault();
   
-  const email = document.getElementById("email").value;
+  const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
   try {
-    const response = await fetch("http://localhost:3000/login", {
+    const response = await fetch("http://localhost:3000/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
     });
 
     const result = await response.json();
@@ -16,7 +16,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     if (response.ok) {
       console.log("Respuesta del servidor:", result);
       Swal.fire("Bienvenido", "Inicio de sesión exitoso", "success").then(() => {
-        if (email === "admin@mail.com") {
+        if (username === "admin@mail.com") {
           console.log("Redirigiendo a adminDashboard.html...");
           window.location.href = "../modules/mainDashboard.html";
         } else {

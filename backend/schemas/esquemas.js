@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 // Esquema de Autor
 const AutorSchema = new mongoose.Schema({
     cedula: { type: String, required: true, unique: true },
-    nombre_completo: { type: String, required: true },
-    nacionalidad: { type: String, required: true }
+    nombre_completo: { type: String, required: true},
+    nacionalidad: { type: String, required: true },
+    libros: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Libro' }]
 });
 
 const Autor = mongoose.model('Autor', AutorSchema);
@@ -22,9 +23,9 @@ const Libro = mongoose.model('Libro', LibroSchema);
 
 // Esquema de Usuario
 const UsuarioSchema = new mongoose.Schema({
-    email: { type: String, required: true, unique: true ,trim: true },
+    username: { type: String, required: true, unique: true ,trim: true },
     password: { type: String, required: true },
-    tipo: { type: String, enum: ['admin', 'usuario'], required: true }
+    tipo: { type: String, enum: ['admin', 'empleado'], required: true }
 });
 
 const Usuario = mongoose.model('Usuario', UsuarioSchema);

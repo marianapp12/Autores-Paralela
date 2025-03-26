@@ -5,6 +5,7 @@
     "express": "^4.21.2",
     "firebase": "^11.5.0",
     "firebase-admin": "^13.2.0",
+    "mongoose": "^8.13.0",
     "node-fetch": "^2.7.0"
   },
   "scripts": {
