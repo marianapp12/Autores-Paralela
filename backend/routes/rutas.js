@@ -2,18 +2,20 @@ const express = require("express");
 const router = express.Router();
 
 // importar controladores
-const { login, register, logout, getUsers, getEmployees, getAdmins } = require("../controllers/controladores");
+const { login, register, logout, getUsers } = require("../controllers/controladores");
 
 // sesion
 router.post("/login", login);
 router.post("/register", register);
 router.post("/logout", logout);
+
+// usuario
 router.get("/getUsers", getUsers);
 
-// empleados
-router.get("/getEmployees", getEmployees);
+// autor
 
-// administradores
-router.get("/getAdmins", getAdmins);
+
+// libro
+
 
 module.exports = router;

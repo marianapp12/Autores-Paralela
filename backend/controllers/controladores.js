@@ -77,7 +77,7 @@ const logout = (req, res) => {
   return res.redirect("../../frontend/modules/login.html");
 };
 
-// funcion para ver los usuarios
+/* usuario */
 const getUsers = async (req, res) => {
   try {
     const users = await Usuario.find();
@@ -87,24 +87,6 @@ const getUsers = async (req, res) => {
   }
 };
 
-// funcion para ver los empleados
-const getEmployees = async (req, res) => {
-  try {
-    const employees = await Usuario.find({ tipo: "empleado" });
-    res.json(employees);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
 
-// funcion para ver los administradores
-const getAdmins = async (req, res) => {
-  try {
-    const admins = await Usuario.find({ tipo: "admin" });
-    res.json(admins);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
 
-module.exports = { login, register, logout, getUsers, getEmployees, getAdmins }; //Exportar funciones
+module.exports = { login, register, logout, getUsers }; //Exportar funciones
