@@ -1,5 +1,5 @@
-const { Autor, Libro, Usuario } = require ("../schemas/esquemas.js"); //import del objecto user
-const bcrypt = require ("bcryptjs"); // Dependencia de npm para encriptar constraseñas
+const { Autor, Libro, Usuario } = require("../schemas/esquemas.js"); //import del objecto user
+const bcrypt = require("bcryptjs"); // Dependencia de npm para encriptar constraseñas
 
 // import { createAccessToken } from "../libs/jwt.js"; // import del token
 
@@ -71,7 +71,7 @@ const login = async (req, res) => {
 // Funcion para salir del programa
 const logout = (req, res) => {
   // eliminar cookie
-//   res.clearCookie("token")
+  //   res.clearCookie("token")
 
   // Redirigir al usuario a la página de login después de hacer logout
   return res.redirect("../../frontend/modules/login.html");
@@ -258,7 +258,7 @@ const deleteLibros = async (req, res) => {
   }
 }
 
-// visualizar autores filtrando por cedula y mostrando que libros ha escrito
+// otros
 const getAutorByCedula = async (req, res) => {
 
   const { cedula } = req.params;
@@ -272,4 +272,17 @@ const getAutorByCedula = async (req, res) => {
   }
 }
 
-module.exports = { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula }; //Exportar funciones
+const getUserByUsername = async (req, res) => {
+
+  const { username } = req.params;
+
+  try {
+    const user = await Usuario.findOne({ username });
+    res.json(user);
+  }
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+module.exports = { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername }; //Exportar funciones
