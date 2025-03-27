@@ -71,35 +71,13 @@ async function InsertUser() {
     }
 }
 
-// control collapse
-document.addEventListener('DOMContentLoaded', function () {
-    const collapseButtons = document.querySelectorAll('[data-bs-toggle="collapse"]');
-
-    collapseButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            // Obtener el ID del colapso que se va a abrir
-            const targetId = this.getAttribute('data-bs-target');
-
-            // Cerrar otros colapsos
-            collapseButtons.forEach(btn => {
-                const otherTargetId = btn.getAttribute('data-bs-target');
-                if (otherTargetId !== targetId) {
-                    const collapseElement = document.querySelector(otherTargetId);
-                    const collapse = bootstrap.Collapse.getInstance(collapseElement);
-                    if (collapse) {
-                        collapse.hide(); // Cerrar el colapso
-                    }
-                }
-            });
-        });
-    });
-});
-
 // traer usuarios
 async function getUsers() {
     try {
         const response = await fetch('http://localhost:3000/api/getUsers');
         const data = await response.json();
+
+        console.log("Datos recibidos en data de getUsers:", data)
 
         if (!response.ok) {
             console.error("Error: " + (data.error || "An error occurred"));
@@ -107,6 +85,7 @@ async function getUsers() {
         }
 
         populateTable(data);
+        collapse()
     } catch (error) {
         console.error("Error getting Users", error);
         getUsersErrorAlert();
@@ -114,6 +93,9 @@ async function getUsers() {
 }
 
 function createTableRow(data) {
+
+    console.log("Datos recibidos en createTableRow:", data)
+
     const row = document.createElement('tr');
     row.innerHTML = `
         <th scope="row">${data._id}</th>
@@ -145,8 +127,12 @@ function createTableRow(data) {
 }
 
 function addEventListeners(data, row) {
+
+    console.log("Datos recibidos en addEventListeners:", data)
+
     const editButton = row.querySelector('.edit-btn');
     editButton.addEventListener('click', () => populateForm(data));
+
     const deleteButton = row.querySelector('.delete-btn');
     deleteButton.addEventListener('click', () => deleteCancelAlert(data));
 }
@@ -154,50 +140,57 @@ function addEventListeners(data, row) {
 function populateTable(data) {
     const id = 'tbody-update-user';
 
+    console.log("Datos recibidos en populateTable:", data)
+
     const tableBody = document.getElementById(id);
     tableBody.innerHTML = '';
     data.forEach((item, index) => {
         const row = createTableRow({
             _id: item._id,
             username: item.username,
+            password: item.password,
             tipo: item.tipo,
         });
         tableBody.appendChild(row);
     });
+
+    console.log("Datos al final de populateTable:", data)
 }
 
 
 
 
 
-
-// variables for update
-const inputName2 = document.getElementById('floatingUsername');
-const inputPassword2 = document.getElementById('floatingPassword');
-const selectRole2 = document.getElementById('select-role');
+// inputs for update
+const inputName2 = document.getElementById('username-update');
+const inputPassword2 = document.getElementById('password-update');
+const selectRole2 = document.getElementById('role-update');
 
 // update
 function populateForm(data) {
-    putName.value = data.name;
-    putSpecies.value = data.species;
-    putAge.value = data.age;
-    putWeight.value = data.weight;
 
-    var putFormData = new FormData();
+    console.log("Datos recibidos en populateForm:", data)
 
-    putFormData.append('User_id', data.User_id);
-    putFormData.append('oldName', data.name);
-    putFormData.append('photo_url', data.photo_url);
+    inputName2.value = data.username;
+    inputPassword2.value = data.password;
+    selectRole2.value = data.tipo;
 
-    addEventListener(putFormData);
+    updateUser = {
+        _id: data._id,
+        username: data.username,
+        password: data.password,
+        tipo: data.tipo
+    }
+
+    addEventListener(updateUser);
 }
 
-function addEventListener(putFormData) {
+function addEventListener(updateUser) {
     const editButton = document.getElementById('btn-update-submit');
-    editButton.addEventListener('click', () => handlePutSubmit(putFormData));
+    editButton.addEventListener('click', () => handlePutSubmit(updateUser));
 }
 
-async function handlePutSubmit(putFormData) {
+async function handlePutSubmit(updateUser) {
     const putForm = document.getElementById('putForm');
 
     if (!putForm.checkValidity()) {
@@ -205,20 +198,24 @@ async function handlePutSubmit(putFormData) {
         return;
     }
 
-    putFormData.append('name', putName.value);
-    putFormData.append('species', putSpecies.value);
-    putFormData.append('age', putAge.value);
-    putFormData.append('weight', putWeight.value);
-    putFormData.append('photo', putPhoto.files[0]); // Properly append the file
-
-    putUser(putFormData);
+    putUser(updateUser);
 }
 
-async function putUser(putFormData) {
+async function putUser(updateUser) {
+
+    console.log("Enviando datos al servidor:", updateUser)
+
+    const _id = updateUser._id;
+
+    console.log("Datos enviados al servidor:", updateUser);
+
     try {
-        const response = await fetch('/putUser', {
+        const response = await fetch(`http://localhost:3000/api/updateUsers/${_id}`, {
             method: 'PUT',
-            body: putFormData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updateUser)
         });
 
         const responseData = await response.json();
@@ -234,6 +231,9 @@ async function putUser(putFormData) {
         putErrorAlert();
     }
 }
+
+
+
 
 
 
@@ -362,3 +362,49 @@ function postAlert() {
         }
     });
 };
+
+// evento collapse
+document.addEventListener('DOMContentLoaded', function () {
+    const collapseButtons = document.querySelectorAll('[data-bs-toggle="collapse"]');
+
+    collapseButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Obtener el ID del colapso que se va a abrir
+            const targetId = this.getAttribute('data-bs-target');
+
+            // Cerrar otros colapsos
+            collapseButtons.forEach(btn => {
+                const otherTargetId = btn.getAttribute('data-bs-target');
+                if (otherTargetId !== targetId) {
+                    const collapseElement = document.querySelector(otherTargetId);
+                    const collapse = bootstrap.Collapse.getInstance(collapseElement);
+                    if (collapse) {
+                        collapse.hide(); // Cerrar el colapso
+                    }
+                }
+            });
+        });
+    });
+});
+
+// funcion collapse (para el form update)
+function collapse() {
+    const collapseButtons = document.querySelectorAll('[data-bs-toggle="collapse"]');
+
+    collapseButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const targetId = this.getAttribute('data-bs-target');
+
+            collapseButtons.forEach(btn => {
+                const otherTargetId = btn.getAttribute('data-bs-target');
+                if (otherTargetId !== targetId) {
+                    const collapseElement = document.querySelector(otherTargetId);
+                    const collapse = bootstrap.Collapse.getInstance(collapseElement);
+                    if (collapse) {
+                        collapse.hide();
+                    }
+                }
+            });
+        });
+    });
+}

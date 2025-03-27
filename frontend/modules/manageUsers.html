@@ -102,9 +102,9 @@
                                 <div class="form-floating mb-3">
                                     <input type="password" class="form-control" id="floatingPassword"
                                         placeholder="Password"
-                                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&\+._\-])(?=.*[0-9])[A-Za-z\d!@#$%&\+._\-]{8,20}$">
+                                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&\+._\-])(?=.*[0-9])[A-Za-z\d!@#$%&\+._\-]{8,}$">
                                     <label for="floatingPassword">Password *</label>
-                                    <div class="invalid-feedback">Password must be 8 to 20 characters long and must have
+                                    <div class="invalid-feedback">Password must be at least 8 characters long and must have
                                         at least one uppercase
                                         letter, one lowercase letter, one number and one special character</div>
                                 </div>
@@ -153,16 +153,39 @@
                         <div class="text-start p-5">
                             <form class="row g-3 needs-validation" id="putForm" onsubmit="return false" novalidate>
 
-                                <div class="form-text">* Required Field</div>
                                 <div class="col-md-4">
-                                    <label for="name-update" class="form-label">* Name</label>
-                                    <input type="text" class="form-control" id="name-update"
+                                    <label for="username-update" class="form-label">Username *</label>
+                                    <input type="text" class="form-control" id="username-update"
                                         aria-describedby="name-update-help" required placeholder="Enter Name"
                                         minlength="2" maxlength="50" pattern="^[A-Za-z\s]+$">
                                     <div class="invalid-feedback">
                                         Please enter a valid name (only letters, 2-50 characters)
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <label for="password-update" class="form-label">Password *</label>
+                                    <input type="password" class="form-control" id="password-update"
+                                        aria-describedby="password-update-help" required placeholder="Enter Password"
+                                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&\+._\-])(?=.*[0-9])[A-Za-z\d!@#$%&\+._\-]{8,}$">
+                                    <div class="invalid-feedback">
+                                        Password must be at least 8 characters long and must have
+                                        at least one uppercase
+                                        letter, one lowercase letter, one number and one special character
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="role-update" class="form-label">Role *</label>
+                                    <select class="form-select" id="role-update" required>
+                                        <option selected disabled value="">Select Role</option>
+                                        <option value="admin">admin</option>
+                                        <option value="empleado">empleado</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a role</div>
+                                </div>
+
+                                <div class="form-text">* Required fields</div>
 
                                 <div class="col-12">
                                     <div class="form-check">
