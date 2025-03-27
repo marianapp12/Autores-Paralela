@@ -95,80 +95,31 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
-// collapse 2 (para el manage user)
-function collapse() {
-    const collapseButtons = document.querySelectorAll('[data-bs-toggle="collapse"]');
-
-    collapseButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const targetId = this.getAttribute('data-bs-target');
-
-            collapseButtons.forEach(btn => {
-                const otherTargetId = btn.getAttribute('data-bs-target');
-                if (otherTargetId !== targetId) {
-                    const collapseElement = document.querySelector(otherTargetId);
-                    const collapse = bootstrap.Collapse.getInstance(collapseElement);
-                    if (collapse) {
-                        collapse.hide();
-                    }
-                }
-            });
-        });
-    });
-}
-
-
-
-// VARIABLES
-
-//// PUT VARIABLES
-const putName = document.getElementById('name-update');
-const putSpecies = document.getElementById('select-species-update');
-const putAge = document.getElementById('age-update');
-const putWeight = document.getElementById('weight-update');
-const putPhoto = document.getElementById('photo-update');
-
-
-
-// LOGIC
-
-//// GET LOGIC
-
-async function getUsersByUserOwner() {
+// traer usuarios
+async function getUsers() {
     try {
-        const response = await fetch('/getUsersByUserOwner');
+        const response = await fetch('http://localhost:3000/api/getUsers');
         const data = await response.json();
 
         if (!response.ok) {
             console.error("Error: " + (data.error || "An error occurred"));
-            getUsersByUserOwnerErrorAlert(data.error);
+            getUsersErrorAlert(data.error);
         }
 
         populateTable(data);
-        collapse();
     } catch (error) {
-        console.error("Error getting Users and user owners", error);
-        getUsersByUserOwnerErrorAlert();
+        console.error("Error getting Users", error);
+        getUsersErrorAlert();
     }
 }
 
 function createTableRow(data) {
     const row = document.createElement('tr');
     row.innerHTML = `
-        <th scope="row">${data.User_id}</th>
-        <td>${data.name}</td>
-        <td>${data.species}</td>
-        <td>${data.age}</td>
-        <td>${data.weight}</td>
-        <td>
-            <p class="d-inline-flex gap-1">
-                ${data.photo_url
-            ? `<img src="${data.photo_url}" class="img-thumbnail" alt="user photo" style="max-width: 100px;">`
-            : `<img src="https://res.cloudinary.com/dieprtgzj/image/upload/v1734023704/User_silhouette_ww3w2l.jpg" class="img-thumbnail" alt="user photo" style="max-width: 100px;">`
-        }
-            </p>
-        </td>
+        <th scope="row">${data._id}</th>
+        <td>${data.username}</td>
+        <td>${data.tipo}</td>
+
         <td>
             <p class="d-inline-flex gap-1">
                 <button class="btn btn-outline-info btn-lg edit-btn" type="button" data-bs-toggle="collapse"
@@ -178,6 +129,7 @@ function createTableRow(data) {
                 </button>
             </p>
         </td>
+
         <td>
             <p class="d-inline-flex gap-1">
                 <button class="btn btn-outline-danger btn-lg delete-btn" type="button" aria-expanded="false">
@@ -206,12 +158,9 @@ function populateTable(data) {
     tableBody.innerHTML = '';
     data.forEach((item, index) => {
         const row = createTableRow({
-            User_id: item.User_id,
-            name: item.name,
-            species: item.species,
-            age: item.age,
-            weight: item.weight,
-            photo_url: item.photo_url
+            _id: item._id,
+            username: item.username,
+            tipo: item.tipo,
         });
         tableBody.appendChild(row);
     });
@@ -219,8 +168,15 @@ function populateTable(data) {
 
 
 
-//// UPDATE LOGIC
 
+
+
+// variables for update
+const inputName2 = document.getElementById('floatingUsername');
+const inputPassword2 = document.getElementById('floatingPassword');
+const selectRole2 = document.getElementById('select-role');
+
+// update
 function populateForm(data) {
     putName.value = data.name;
     putSpecies.value = data.species;
@@ -323,10 +279,10 @@ async function deleteUser(deleteData) {
 
 //// GET ALERTS
 
-function getUsersByUserOwnerErrorAlert(message) {
+function getUsersErrorAlert(message) {
     Swal.fire({
         icon: "error",
-        title: message || "Error getting Users and user owners",
+        title: message || "Error getting Users",
         allowOutsideClick: false
     });
 };
