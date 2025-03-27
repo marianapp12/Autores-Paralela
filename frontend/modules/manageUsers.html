@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Manage Users | Admin</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="../css/manageUser.css">
+</head>
+
+<body>
+    <header>
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/admin">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" href="/manageUser">Manage Users</a>
+                        <a class="nav-link" href="/scheduleAppointment">Manage Autors</a>
+                        <a class="nav-link" href="">Manage Books</a>
+                        <a class="nav-link" href="../modules/login.html"><img src="../assets/exit.png" alt="Exit"
+                                width="30" height="30"></a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- header part 2 -->
+        <div class="p-5 text-center bg-body-tertiary">
+            <h1 class="mb-3">Poli Library</h1>
+            <h4 class="mb-3">Manage Users</h4>
+        </div>
+
+    </header>
+
+    <main>
+
+        <!-- description -->
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                    <br>
+                    <p class="h3">¡Welcome dear admin! Please select which feature do you want to use:
+                    </p>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <!-- collapse -->
+        <div class="container text-center">
+            <div class="row">
+                <div class="col mt-4">
+
+                    <!-- collapse button register User -->
+                    <p class="d-inline-flex gap-1">
+                        <button class="btn btn-info btn-lg" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseRegisterUser" aria-expanded="false"
+                            aria-controls="collapseRegisterUser">
+                            Register User
+                        </button>
+                    </p>
+
+                    <!-- collapse button update User -->
+                    <p class="d-inline-flex gap-1">
+                        <button class="btn btn-info btn-lg" type="button" id="btn-collapse-update"
+                            data-bs-toggle="collapse" data-bs-target="#table-collapseUpdateUser" aria-expanded="false"
+                            aria-controls="table-collapseUpdateUser" onclick="getUsers()">
+                            Manage User
+                        </button>
+                    </p>
+
+                    <!-- collapse content register User -->
+                    <div class="collapse envelope" id="collapseRegisterUser">
+                        <div class="text-start bg-info-subtle p-5">
+                            <!-- form register User -->
+                            <form class="needs-validation" id="register-form" novalidate>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingUsername" placeholder="Username"
+                                        required minlength="2" maxlength="50" pattern="^[A-Za-z\s]+$">
+                                    <label for="floatingUsername">Username *</label>
+                                    <div class="invalid-feedback">Please enter a Username between 2 and 50 letters</div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" id="floatingPassword"
+                                        placeholder="Password"
+                                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&\+._\-])(?=.*[0-9])[A-Za-z\d!@#$%&\+._\-]{8,}$">
+                                    <label for="floatingPassword">Password *</label>
+                                    <div class="invalid-feedback">Password must be at least 8 characters long and must have
+                                        at least one uppercase
+                                        letter, one lowercase letter, one number and one special character</div>
+                                </div>
+
+                                <select class="form-select" aria-label="Default select example" id="select-role"
+                                    required>
+                                    <option selected disabled value="">Role *</option>
+                                    <option value="admin">admin</option>
+                                    <option value="empleado">empleado</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a role</div>
+
+                                <p><em>* Required fields</em></p>
+                                <div class="d-grid gap-2 col-6 mx-auto">
+                                    <button type="submit" class="btn btn-primary" id="btnRegisterUser">Register</button>
+                                </div>
+
+                            </form>
+                            <!-- form register User -->
+                        </div>
+                    </div>
+                    <!-- collapse content register User -->
+
+                    <!-- tabla para visualizar -->
+                    <div class="collapse envelope table-collapse" id="table-collapseUpdateUser">
+                        <div class="text-start p-5">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-update-user">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- form Update User -->
+                    <div class="collapse envelope" id="collapseUpdateUser">
+                        <div class="text-start p-5">
+                            <form class="row g-3 needs-validation" id="putForm" onsubmit="return false" novalidate>
+
+                                <div class="col-md-4">
+                                    <label for="username-update" class="form-label">Username *</label>
+                                    <input type="text" class="form-control" id="username-update"
+                                        aria-describedby="name-update-help" required placeholder="Enter Name"
+                                        minlength="2" maxlength="50" pattern="^[A-Za-z\s]+$">
+                                    <div class="invalid-feedback">
+                                        Please enter a valid name (only letters, 2-50 characters)
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="password-update" class="form-label">Password *</label>
+                                    <input type="password" class="form-control" id="password-update"
+                                        aria-describedby="password-update-help" required placeholder="Enter Password"
+                                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&\+._\-])(?=.*[0-9])[A-Za-z\d!@#$%&\+._\-]{8,}$">
+                                    <div class="invalid-feedback">
+                                        Password must be at least 8 characters long and must have
+                                        at least one uppercase
+                                        letter, one lowercase letter, one number and one special character
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="role-update" class="form-label">Role *</label>
+                                    <select class="form-select" id="role-update" required>
+                                        <option selected disabled value="">Select Role</option>
+                                        <option value="admin">admin</option>
+                                        <option value="empleado">empleado</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a role</div>
+                                </div>
+
+                                <div class="form-text">* Required fields</div>
+
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="invalidCheck" required>
+                                        <label class="form-check-label" for="invalidCheck">
+                                            * Agree to terms and conditions
+                                        </label>
+                                        <div class="invalid-feedback">
+                                            You must agree before submitting
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-info btn-lg edit-btn" type="button" aria-expanded="false"
+                                        id="btn-update-submit">
+                                        Submit
+                                    </button>
+                                    <button class="btn btn-danger btn-lg edit-btn" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#table-collapseUpdateUser"
+                                        aria-expanded="false" aria-controls="table-collapseUpdateUser"
+                                        id="btn-update-cancel" onclick="putCancelAlert()">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                            <!-- form register Users -->
+                        </div>
+                    </div>
+                    <!---->
+                    <!-- form Update User -->
+
+                </div>
+            </div>
+        </div>
+        <!-- collapse -->
+
+    </main>
+
+    <!-- footer -->
+    <footer class="text-center mt-3">
+        <div class="card">
+            <div class="card-header">
+                Contacto
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Mariana Penagos - Backend Developer</h5>
+                <p class="card-text">mariana_pengos04192@elpoli.edu.co</p>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">David Correa - Frontend Developer</h5>
+                <p class="card-text">david_correa82212@elpoli.edu.co</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <!-- js -->
+    <script src="../js/manageUser.js"></script>
+</body>
+
+</html>
