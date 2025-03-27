@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Manage Users | Admin</title>
+    <title>Manage Authors | Admin</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -31,8 +31,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="../modules/manageUsers.html">Manage Users</a>
-                        <a class="nav-link" href="../modules/manageAutors.html">Manage Autors</a>
+                        <a class="nav-link" aria-current="page" href="../modules/manageUsers.html">Manage Users</a>
+                        <a class="nav-link active" href="../modules/manageAutors.html">Manage Autors</a>
                         <a class="nav-link" href="../modules/manageBooks.html">Manage Books</a>
                         <a class="nav-link" href="../modules/login.html"><img src="../assets/exit.png" alt="Exit"
                                 width="30" height="30"></a>
@@ -44,7 +44,7 @@
         <!-- header part 2 -->
         <div class="p-5 text-center bg-body-tertiary">
             <h1 class="mb-3">Poli Library</h1>
-            <h4 class="mb-3">Manage Users</h4>
+            <h4 class="mb-3">Manage Authors</h4>
         </div>
 
     </header>
@@ -68,121 +68,109 @@
             <div class="row">
                 <div class="col mt-4">
 
-                    <!-- collapse button register User -->
+                    <!-- collapse button register Autor -->
                     <p class="d-inline-flex gap-1">
                         <button class="btn btn-info btn-lg" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseRegisterUser" aria-expanded="false"
-                            aria-controls="collapseRegisterUser">
-                            Register User
+                            data-bs-target="#collapseRegisterAutor" aria-expanded="false"
+                            aria-controls="collapseRegisterAutor">
+                            Register Autor
                         </button>
                     </p>
 
-                    <!-- collapse button update User -->
+                    <!-- collapse button update Autor -->
                     <p class="d-inline-flex gap-1">
                         <button class="btn btn-info btn-lg" type="button" id="btn-collapse-update"
-                            data-bs-toggle="collapse" data-bs-target="#table-collapseUpdateUser" aria-expanded="false"
-                            aria-controls="table-collapseUpdateUser" onclick="getUsers()">
-                            Manage User
+                            data-bs-toggle="collapse" data-bs-target="#table-collapseUpdateAutor" aria-expanded="false"
+                            aria-controls="table-collapseUpdateAutor" onclick="getAuthors()">
+                            Manage Autor
                         </button>
                     </p>
 
-                    <!-- collapse content register User -->
-                    <div class="collapse envelope" id="collapseRegisterUser">
+                    <!-- collapse content register Autor -->
+                    <div class="collapse envelope" id="collapseRegisterAutor">
                         <div class="text-start bg-info-subtle p-5">
-                            <!-- form register User -->
+                            <!-- form register Autor -->
                             <form class="needs-validation" id="register-form" novalidate>
 
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="floatingUsername" placeholder="Username"
-                                        required minlength="2" maxlength="50" pattern="^[A-Za-z\s]+$">
-                                    <label for="floatingUsername">Username *</label>
-                                    <div class="invalid-feedback">Please enter a Username between 2 and 50 letters</div>
+                                    <input type="text" class="form-control" id="floating-cedula" placeholder="cedula"
+                                        required pattern="^\d{8,10}$">
+                                    <label for="floating-cedula">Cedula *</label>
+                                    <div class="invalid-feedback">Please enter a id between 8 and 10 digits</div>
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input type="password" class="form-control" id="floatingPassword"
-                                        placeholder="Password"
-                                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&\+._\-])(?=.*[0-9])[A-Za-z\d!@#$%&\+._\-]{8,}$">
-                                    <label for="floatingPassword">Password *</label>
-                                    <div class="invalid-feedback">Password must be at least 8 characters long and must have
-                                        at least one uppercase
-                                        letter, one lowercase letter, one number and one special character</div>
+                                    <input type="text" class="form-control" id="floating-nombre-completo"
+                                        placeholder="nombre completo" required minlength="2" maxlength="50"
+                                        pattern="^[A-Za-z\s]+$">
+                                    <label for="floating-nombre-completo">Nombre completo *</label>
+                                    <div class="invalid-feedback">Please enter a name between 2 and 50 letters</div>
                                 </div>
 
-                                <select class="form-select" aria-label="Default select example" id="select-role"
-                                    required>
-                                    <option selected disabled value="">Role *</option>
-                                    <option value="admin">admin</option>
-                                    <option value="empleado">empleado</option>
-                                </select>
-                                <div class="invalid-feedback">Please select a role</div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floating-nacionalidad"
+                                        placeholder="nacionalidad">
+                                    <label for="floating-nacionalidad">Nacionalidad *</label>
+                                </div>
 
                                 <p><em>* Required fields</em></p>
                                 <div class="d-grid gap-2 col-6 mx-auto">
-                                    <button type="submit" class="btn btn-primary" id="btnRegisterUser">Register</button>
+                                    <button type="submit" class="btn btn-primary"
+                                        id="btnRegisterAutor">Register</button>
                                 </div>
 
                             </form>
-                            <!-- form register User -->
+                            <!-- form register Autor -->
                         </div>
                     </div>
-                    <!-- collapse content register User -->
+                    <!-- collapse content register Autor -->
 
                     <!-- tabla para visualizar -->
-                    <div class="collapse envelope table-collapse" id="table-collapseUpdateUser">
+                    <div class="collapse envelope table-collapse" id="table-collapseUpdateAutor">
                         <div class="text-start p-5">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Nombre completo</th>
+                                        <th scope="col">Cedula</th>
+                                        <th scope="col">Nacionalidad</th>
+                                        <th scope="col">Libros</th>
                                         <th scope="col"></th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
-                                <tbody id="tbody-update-user">
+                                <tbody id="tbody-update-autor">
 
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <!-- form Update User -->
-                    <div class="collapse envelope" id="collapseUpdateUser">
+                    <!-- form Update Autor -->
+                    <div class="collapse envelope" id="collapseUpdateAutor">
                         <div class="text-start p-5">
                             <form class="row g-3 needs-validation" id="putForm" onsubmit="return false" novalidate>
 
-                                <div class="col-md-4">
-                                    <label for="username-update" class="form-label">Username *</label>
-                                    <input type="text" class="form-control" id="username-update"
-                                        aria-describedby="name-update-help" required placeholder="Enter Name"
-                                        minlength="2" maxlength="50" pattern="^[A-Za-z\s]+$">
-                                    <div class="invalid-feedback">
-                                        Please enter a valid name (only letters, 2-50 characters)
-                                    </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="cedula-update" placeholder="cedula"
+                                        required pattern="^\d{8,10}$">
+                                    <label for="cedula-update">Cedula *</label>
+                                    <div class="invalid-feedback">Please enter a id between 8 and 10 digits</div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <label for="password-update" class="form-label">Password *</label>
-                                    <input type="password" class="form-control" id="password-update"
-                                        aria-describedby="password-update-help" required placeholder="Enter Password"
-                                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&\+._\-])(?=.*[0-9])[A-Za-z\d!@#$%&\+._\-]{8,}$">
-                                    <div class="invalid-feedback">
-                                        Password must be at least 8 characters long and must have
-                                        at least one uppercase
-                                        letter, one lowercase letter, one number and one special character
-                                    </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="nombre-completo-update"
+                                        placeholder="nombre completo" required minlength="2" maxlength="50"
+                                        pattern="^[A-Za-z\s]+$">
+                                    <label for="nombre-completo-update">Nombre completo *</label>
+                                    <div class="invalid-feedback">Please enter a name between 2 and 50 letters</div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <label for="role-update" class="form-label">Role *</label>
-                                    <select class="form-select" id="role-update" required>
-                                        <option selected disabled value="">Select Role</option>
-                                        <option value="admin">admin</option>
-                                        <option value="empleado">empleado</option>
-                                    </select>
-                                    <div class="invalid-feedback">Please select a role</div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="nacionalidad-update"
+                                        placeholder="nacionalidad">
+                                    <label for="nacionalidad-update">Nacionalidad *</label>
                                 </div>
 
                                 <div class="form-text">* Required fields</div>
@@ -198,24 +186,28 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
+
                                     <button class="btn btn-info btn-lg edit-btn" type="button" aria-expanded="false"
                                         id="btn-update-submit">
                                         Submit
                                     </button>
+
                                     <button class="btn btn-danger btn-lg edit-btn" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#table-collapseUpdateUser"
-                                        aria-expanded="false" aria-controls="table-collapseUpdateUser"
+                                        data-bs-toggle="collapse" data-bs-target="#table-collapseUpdateAutor"
+                                        aria-expanded="false" aria-controls="table-collapseUpdateAutor"
                                         id="btn-update-cancel" onclick="putCancelAlert()">
                                         Cancel
                                     </button>
+                                    
                                 </div>
                             </form>
-                            <!-- form register Users -->
+                            <!-- form register autors -->
                         </div>
                     </div>
                     <!---->
-                    <!-- form Update User -->
+                    <!-- form Update Autor -->
 
                 </div>
             </div>
@@ -251,7 +243,7 @@
         crossorigin="anonymous"></script>
 
     <!-- js -->
-    <script src="../js/manageUser.js"></script>
+    <script src="../js/manageAutor.js"></script>
 </body>
 
 </html>
