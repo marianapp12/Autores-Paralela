@@ -65,37 +65,6 @@ function visualizeAuthors() {
         });
 }
 
-// funcion para visualizar los libros de un autor
-
-function getLibros(authorId) {
-    const url = `http://localhost:3000/api/authors/${authorId}/books`;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            if (data.ok) {
-                const books = data.books;
-                const booksTable = document.getElementById('books-table');
-                booksTable.innerHTML = '';
-                books.forEach(book => {
-                    booksTable.innerHTML += `
-                        <tr>
-                            <td>${book.id}</td>
-                            <td>${book.title}</td>
-                            <td>${book.editorial}</td>
-                            <td>${book.genre}</td>
-                            <td>${book.publication_year}</td>
-                        </tr>
-                    `;
-                });
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            getAuthorsErrorAlert();
-        });
-}
-
 // get alert
 
 function getAuthorsErrorAlert(message) {
