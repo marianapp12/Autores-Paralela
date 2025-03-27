@@ -21,13 +21,4 @@ const LibroSchema = new mongoose.Schema({
 
 const Libro = mongoose.model('Libro', LibroSchema);
 
-// Esquema de Usuario
-const UsuarioSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true ,trim: true },
-    password: { type: String, required: true },
-    tipo: { type: String, enum: ['admin', 'empleado'], required: true }
-});
-
-const Usuario = mongoose.model('Usuario', UsuarioSchema);
-
-module.exports = { Autor, Libro, Usuario };
+module.exports = { Autor, Libro};

@@ -1,72 +1,26 @@
-const { Autor, Libro, Usuario } = require("../schemas/esquemas.js"); //import del objecto user
-const bcrypt = require("bcryptjs"); // Dependencia de npm para encriptar constraseñas
+const { auth, signInWithEmailAndPassword } = require("../database/firebase");
+const User = require("../schemas/User");
 
-// import { createAccessToken } from "../libs/jwt.js"; // import del token
+// const login = async (req, res) => {
+//     const { email, password } = req.body;
 
-/* sesion */
-const register = async (req, res) => {
-  //Funcion para Crear,Guardar  el usuario
-  const { username, password, tipo } = req.body; //requerimientos
+//     try {
+//         // Autenticación con Firebase
+//         const userCredential = await signInWithEmailAndPassword(auth, email, password);
+//         const firebaseUser = userCredential.user;
 
-  try {
-    const passwordHash = await bcrypt.hash(password, 10); //Encriptar contraseña
+//         // Buscar usuario en MongoDB
+//         let mongoUser = await User.findOne({ uid: firebaseUser.uid });
 
-    const newUser = new Usuario({
-      //Crear Usuario
-      username,
-      password: passwordHash,
-      tipo,
-    });
+//         if (!mongoUser) {
+//             return res.status(404).json({ message: "Usuario no registrado en MongoDB" });
+//         }
 
-    const userSaved = await newUser.save(); //Guardar usuario
-    // const token = await createAccessToken({ id: userSaved.id }); //Creacion del Token
-    // res.cookie("token", token, {
-    //   httpOnly: true,
-    // });
-
-    res.json({
-      // Respuesta del servidor de los parametros del usuario
-      id: userSaved.id,
-      username: userSaved.username,
-      tipo: userSaved.tipo,
-      createdAt: userSaved.createdAt,
-      updatedAt: userSaved.updatedAt,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-const login = async (req, res) => {
-
-  //Funcion para Verificar el login,contraseña del usuario
-  const { username, password } = req.body;
-
-  try {
-    const userFound = await Usuario.findOne({ username }); // Encontrar Usuario Registrado
-    if (!userFound)
-      return res.status(400).json({ message: "Usuario no Encontrado" }); // Si no lo encontro muestra mensaje
-
-    const isMatch = await bcrypt.compare(password, userFound.password); // validar contraseña
-    if (!isMatch)
-      return res.status(400).json({ message: "Contraseña incorrecta" }); // Mensaje de contraseña incorrecta
-
-    // const token = await createAccessToken({ id: userFound.id }); //Creacion del Token con ese ID
-    // res.cookie("token", token, {
-    //   httpOnly: true,
-    // });
-
-    res.json({
-      id: userFound.id,
-      username: userFound.username,
-      tipo: userFound.tipo,
-      createdAt: userFound.createdAt,
-      updatedAt: userFound.updatedAt,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+//         res.json({ message: "Inicio de sesión exitoso", user: mongoUser });
+//     } catch (error) {
+//         res.status(400).json({ message: "Error en autenticación", error: error.message });
+//     }
+// };
 
 // Funcion para salir del programa
 const logout = (req, res) => {
@@ -290,4 +244,4 @@ const getUserByUsername = async (req, res) => {
   }
 }
 
-module.exports = { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername }; //Exportar funciones
+module.exports = { login, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername }; //Exportar funciones
