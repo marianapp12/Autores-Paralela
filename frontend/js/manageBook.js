@@ -270,7 +270,6 @@ async function deleteUser(deleteData) {
     }
 }
 
-
 // ALERTS
 
 //// GET ALERTS

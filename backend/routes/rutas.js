@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // importar controladores
-const { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername } = require("../controllers/controladores");
+const { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername, getCedulas } = require("../controllers/controladores");
 
 /* Rutas */
 
@@ -32,5 +32,6 @@ router.delete("/deleteLibros/:id", deleteLibros);
 // otros
 router.get("/getAutorByCedula/:cedula", getAutorByCedula);
 router.get("/getUserByUsername/:username", getUserByUsername);
+router.get("/getCedulas", getCedulas);
 
 module.exports = router;

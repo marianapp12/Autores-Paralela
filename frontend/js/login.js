@@ -44,7 +44,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
           window.location.href = "../modules/manageUsers.html";
         } else {
           console.log("Redirigiendo a la pagina del empleado");
-          window.location.href = "../modules/employeeDashboard.html";
+          window.location.href = "../modules/employee.html";
         }
       });
 
