@@ -41,7 +41,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
       Swal.fire("Bienvenido", "Inicio de sesión exitoso", "success").then(() => {
         if (tipo === "admin") {
           console.log("Redirigiendo a la pagina del administrador...");
-          window.location.href = "../modules/mainDashboard.html";
+          window.location.href = "../modules/manageUsers.html";
         } else {
           console.log("Redirigiendo a la pagina del empleado");
           window.location.href = "../modules/employeeDashboard.html";
