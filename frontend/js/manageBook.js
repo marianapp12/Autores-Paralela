@@ -1,11 +1,12 @@
 // inputs
-
-const inputNombreCompleto = document.getElementById('floating-nombre-completo');
-const inputCedula = document.getElementById('floating-cedula');
-const inputNacionalidad = document.getElementById('floating-nacionalidad');
+const isbn = document.getElementById('floating-isbn');
+const editorial = document.getElementById('floating-editorial');
+const genero = document.getElementById('floating-genero');
+const añoPublicacion = document.getElementById('floating-año-publicacion');
+const autor = document.getElementById('floating-autor');
 
 // buttons
-const registerButton = document.getElementById('btnRegisterAutor');
+const registerButton = document.getElementById('btnRegisterBook');
 
 // validacion de campos
 (() => {
@@ -35,27 +36,29 @@ registerButton.addEventListener('click', async function (event) {
     // Verifica si el formulario es válido antes de proceder con el registro
     if (form.checkValidity()) {
         // Llama a la función para registrar el usuario
-        await InsertAutor();
+        await InsertBook();
     } else {
         form.classList.add('was-validated');  // Agrega la clase para mostrar los errores
     }
 });
 
-async function InsertAutor() {
+async function InsertBook() {
 
-    let autor = {
-        cedula: inputCedula.value,
-        nombre_completo: inputNombreCompleto.value,
-        nacionalidad: inputNacionalidad.value
+    let book = {
+        isbn: isbn.value,
+        editorial: editorial.value,
+        genero: genero.value,
+        anio_publicacion: añoPublicacion.value,
+        autor: autor.value
     }
 
     try {
-        const response = await fetch("http://localhost:3000/api/createAutores", {
+        const response = await fetch("http://localhost:3000/api/createLibros", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(autor)
+            body: JSON.stringify(book)
         });
 
         if (!response.ok) {
@@ -67,7 +70,7 @@ async function InsertAutor() {
 
     } catch (error) {
         console.error('Error:', error);
-        alert('There was no possible to register the autor');
+        alert('There was no possible to register the book');
     }
 }
 
@@ -75,22 +78,22 @@ async function InsertAutor() {
 
 
 
-// traer autores
-async function getAuthors() {
+// traer libros
+async function getBooks() {
     try {
-        const response = await fetch('http://localhost:3000/api/getAutores');
+        const response = await fetch('http://localhost:3000/api/getlibros');
         const data = await response.json();
 
         if (!response.ok) {
             console.error("Error: " + (data.error || "An error occurred"));
-            getAutorsErrorAlert(data.error);
+            getLibrosErrorAlert(data.error);
         }
 
         populateTable(data);
         collapse()
     } catch (error) {
-        console.error("Error getting autores", error);
-        getAutorsErrorAlert();
+        console.error("Error getting libros", error);
+        getLibrosErrorAlert();
     }
 }
 
@@ -99,16 +102,17 @@ function createTableRow(data) {
     const row = document.createElement('tr');
     row.innerHTML = `
         <th scope="row">${data._id}</th>
-        <td>${data.cedula}</td>
-        <td>${data.nombre_completo}</td>
-        <td>${data.nacionalidad}</td>
-        <td>${data.libros.length}</td>
+        <td>${data.isbn}</td>
+        <td>${data.editorial}</td>
+        <td>${data.genero}</td>
+        <td>${data.añoPublicacion}</td>
+        <td>${data.autor}</td>
 
         <td>
             <p class="d-inline-flex gap-1">
                 <button class="btn btn-outline-info btn-lg edit-btn" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseUpdateAutor" aria-expanded="false"
-                    aria-controls="collapseUpdateAutor">
+                    data-bs-target="#collapseUpdateLibro" aria-expanded="false"
+                    aria-controls="collapseUpdateLibro">
                     Edit
                 </button>
             </p>
@@ -138,7 +142,7 @@ function addEventListeners(data, row) {
 }
 
 function populateTable(data) {
-    const id = 'tbody-update-autor';
+    const id = 'tbody-update-libro';
 
     const tableBody = document.getElementById(id);
     tableBody.innerHTML = '';
@@ -146,10 +150,11 @@ function populateTable(data) {
         // el row debe tener todos los datos de data (campos del schema)
         const row = createTableRow({
             _id: item._id,
-            cedula: item.cedula,
-            nombre_completo: item.nombre_completo,
-            nacionalidad: item.nacionalidad,
-            libros: item.libros
+            isbn: item.isbn,
+            editorial: item.editorial,
+            genero: item.genero,
+            añoPublicacion: item.anio_publicacion,
+            autor: item.autor.cedula
         });
         tableBody.appendChild(row);
     });
@@ -235,12 +240,12 @@ function handleDelete(data) {
 
     deleteData._id = data._id;
 
-    deleteAuthor(deleteData)
+    deleteUser(deleteData)
 }
 
-async function deleteAuthor(deleteData) {
+async function deleteUser(deleteData) {
     try {
-        const response = await fetch(`http://localhost:3000/api/deleteAutores/${deleteData._id}`, {
+        const response = await fetch(`http://localhost:3000/api/deletelibros/${deleteData._id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -257,7 +262,7 @@ async function deleteAuthor(deleteData) {
             deleteErrorAlert(responseData.error);
         }
     } catch (error) {
-        console.error('Error deleting author', error);
+        console.error('Error deleting book', error);
         deleteErrorAlert();
     }
 }
@@ -267,10 +272,10 @@ async function deleteAuthor(deleteData) {
 
 //// GET ALERTS
 
-function getAutorsErrorAlert(message) {
+function getLibrosErrorAlert(message) {
     Swal.fire({
         icon: "error",
-        title: message || "Error getting athors",
+        title: message || "Error getting books",
         allowOutsideClick: false
     });
 };
@@ -280,7 +285,7 @@ function getAutorsErrorAlert(message) {
 function putAlert(message) {
     Swal.fire({
         icon: "success",
-        title: message || "author has been updated",
+        title: message || "book has been updated",
         allowOutsideClick: false
     }).then((result) => {
         if (result.isConfirmed) {
@@ -291,7 +296,7 @@ function putAlert(message) {
 
 function putCancelAlert() {
     Swal.fire({
-        title: "The update of a author was cancelled",
+        title: "The update of a book was cancelled",
         allowOutsideClick: false
     });
 };
@@ -299,7 +304,7 @@ function putCancelAlert() {
 function putErrorAlert(error) {
     Swal.fire({
         icon: "error",
-        title: error || "Error updating author",
+        title: error || "Error updating book",
         allowOutsideClick: false
     });
 };
@@ -309,7 +314,7 @@ function putErrorAlert(error) {
 function deleteAlert(message) {
     Swal.fire({
         icon: "success",
-        title: message || "author has been deleted",
+        title: message || "book has been deleted",
         allowOutsideClick: false
     }).then((result) => {
         if (result.isConfirmed) { // Se ejecuta cuando el usuario hace clic en "OK" o confirma el diálogo
@@ -320,7 +325,7 @@ function deleteAlert(message) {
 
 function deleteCancelAlert(data) {
     Swal.fire({
-        title: "Are you sure you want to delete the author?",
+        title: "Are you sure you want to delete the book?",
         showCancelButton: true,
         allowOutsideClick: false
     }).then((result) => {
@@ -333,7 +338,7 @@ function deleteCancelAlert(data) {
 function deleteErrorAlert(error) {
     Swal.fire({
         icon: "error",
-        title: error || "Error deleting author",
+        title: error || "Error deleting book",
         allowOutsideClick: false
     });
 };
@@ -343,7 +348,7 @@ function deleteErrorAlert(error) {
 function postAlert() {
     Swal.fire({
         icon: "success",
-        title: "author has been created"
+        title: "book has been created"
     }).then((result) => {
         if (result.isConfirmed) {
             location.reload(true);

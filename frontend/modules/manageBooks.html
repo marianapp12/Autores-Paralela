@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Manage Books | Admin</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="../css/manageUser.css">
+</head>
+
+<body>
+    <header>
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/admin">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" aria-current="page" href="../modules/manageUsers.html">Manage Books</a>
+                        <a class="nav-link" href="../modules/manageAutors.html">Manage Autors</a>
+                        <a class="nav-link active" href="../modules/manageBooks.html">Manage Books</a>
+                        <a class="nav-link" href="../modules/login.html"><img src="../assets/exit.png" alt="Exit"
+                                width="30" height="30"></a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- header part 2 -->
+        <div class="p-5 text-center bg-body-tertiary">
+            <h1 class="mb-3">Poli Library</h1>
+            <h4 class="mb-3">Manage Books</h4>
+        </div>
+
+    </header>
+
+    <main>
+
+        <!-- description -->
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                    <br>
+                    <p class="h3">¡Welcome dear admin! Please select which feature do you want to use:
+                    </p>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <!-- collapse -->
+        <div class="container text-center">
+            <div class="row">
+                <div class="col mt-4">
+
+                    <!-- collapse button register Book -->
+                    <p class="d-inline-flex gap-1">
+                        <button class="btn btn-info btn-lg" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseRegisterBook" aria-expanded="false"
+                            aria-controls="collapseRegisterBook">
+                            Register Book
+                        </button>
+                    </p>
+
+                    <!-- collapse button update Book -->
+                    <p class="d-inline-flex gap-1">
+                        <button class="btn btn-info btn-lg" type="button" id="btn-collapse-update"
+                            data-bs-toggle="collapse" data-bs-target="#table-collapseUpdateLibro" aria-expanded="false"
+                            aria-controls="table-collapseUpdateLibro" onclick="getBooks()">
+                            Manage Book
+                        </button>
+                    </p>
+
+                    <!-- collapse content register Book -->
+                    <div class="collapse envelope" id="collapseRegisterBook">
+                        <div class="text-start bg-info-subtle p-5">
+                            <!-- form register Book -->
+                            <form class="needs-validation" id="register-form" novalidate>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floating-isbn" placeholder="isbn"
+                                        required pattern="^\d{13}$">
+                                    <label for="floating-isbn">ISBN *</label>
+                                    <div class="invalid-feedback">Please enter a isbn of 13 digits</div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floating-editorial"
+                                        placeholder="editorial" required minlength="2" maxlength="50"
+                                        pattern="^[A-Za-z\s]+$">
+                                    <label for="floating-editorial">Editorial *</label>
+                                    <div class="invalid-feedback">Please enter a valid editorial (between 2 and 50 letters)</div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floating-genero"
+                                        placeholder="genero">
+                                    <label for="floating-genero">Genero *</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floating-año-publicacion"
+                                        placeholder="año publicacion" required pattern="^\d{4}$">
+                                    <label for="floating-año-publicacion">Año de publicacion *</label>
+                                    <div class="invalid-feedback">Please enter a valid year (4 digits)</div>
+                                </div>                          
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floating-autor"
+                                        placeholder="autor" required>
+                                    <label for="floating-autor">Autor *</label>
+                                </div>
+
+                                <p><em>* Required fields</em></p>
+                                <div class="d-grid gap-2 col-6 mx-auto">
+                                    <button type="submit" class="btn btn-primary"
+                                        id="btnRegisterBook">Register</button>
+                                </div>
+
+                            </form>
+                            <!-- form register Book -->
+                        </div>
+                    </div>
+                    <!-- collapse content register Book -->
+
+
+
+
+                    <!-- tabla para visualizar -->
+                    <div class="collapse envelope table-collapse" id="table-collapseUpdateLibro">
+                        <div class="text-start p-5">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">ISBN</th>
+                                        <th scope="col">Editorial</th>
+                                        <th scope="col">Genero</th>
+                                        <th scope="col">Año de publicacion</th>
+                                        <th scope="col">Autor</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-update-libro">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- form Update Libro -->
+                    <div class="collapse envelope" id="collapseUpdateLibro">
+                        <div class="text-start p-5">
+                            <form class="row g-3 needs-validation" id="putForm" onsubmit="return false" novalidate>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="cedula-update" placeholder="cedula"
+                                        required pattern="^\d{8,10}$">
+                                    <label for="cedula-update">Cedula *</label>
+                                    <div class="invalid-feedback">Please enter a id between 8 and 10 digits</div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="nombre-completo-update"
+                                        placeholder="nombre completo" required minlength="2" maxlength="50"
+                                        pattern="^[A-Za-z\s]+$">
+                                    <label for="nombre-completo-update">Nombre completo *</label>
+                                    <div class="invalid-feedback">Please enter a name between 2 and 50 letters</div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="nacionalidad-update"
+                                        placeholder="nacionalidad">
+                                    <label for="nacionalidad-update">Nacionalidad *</label>
+                                </div>
+
+                                <div class="form-text">* Required fields</div>
+
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="invalidCheck" required>
+                                        <label class="form-check-label" for="invalidCheck">
+                                            * Agree to terms and conditions
+                                        </label>
+                                        <div class="invalid-feedback">
+                                            You must agree before submitting
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+
+                                    <button class="btn btn-info btn-lg edit-btn" type="button" aria-expanded="false"
+                                        id="btn-update-submit">
+                                        Submit
+                                    </button>
+
+                                    <button class="btn btn-danger btn-lg edit-btn" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#table-collapseUpdateLibro"
+                                        aria-expanded="false" aria-controls="table-collapseUpdateLibro"
+                                        id="btn-update-cancel" onclick="putCancelAlert()">
+                                        Cancel
+                                    </button>
+                                    
+                                </div>
+                            </form>
+                            <!-- form register libro -->
+                        </div>
+                    </div>
+                    <!---->
+                    <!-- form Update libro -->
+
+                </div>
+            </div>
+        </div>
+        <!-- collapse -->
+
+    </main>
+
+    <!-- footer -->
+    <footer class="text-center mt-3">
+        <div class="card">
+            <div class="card-header">
+                Contacto
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Mariana Penagos - Backend Developer</h5>
+                <p class="card-text">mariana_pengos04192@elpoli.edu.co</p>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">David Correa - Frontend Developer</h5>
+                <p class="card-text">david_correa82212@elpoli.edu.co</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <!-- js -->
+    <script src="../js/manageBook.js"></script>
+</body>
+
+</html>
