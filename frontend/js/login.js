@@ -19,7 +19,8 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         if (email === "admin@mail.com") {
           window.location.href = "../modules/manageAutors.html";
         } else {
-          window.location.href = "../modules/employeeDashboard.html";
+          console.log("Redirigiendo a la pagina del empleado");
+          window.location.href = "../modules/employee.html";
         }
       });
     } else {

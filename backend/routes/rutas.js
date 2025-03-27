@@ -3,7 +3,7 @@ const User = require("../schemas/User");
 const router = express.Router();
 
 // importar controladores
-const { login, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername } = require("../controllers/controladores");
+const { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername, getCedulas } = require("../controllers/controladores");
 
 /* Rutas */
 
@@ -32,15 +32,5 @@ router.delete("/deleteLibros/:id", deleteLibros);
 // otros
 router.get("/getAutorByCedula/:cedula", getAutorByCedula);
 router.get("/getUserByUsername/:username", getUserByUsername);
-
-router.get("/getUserByUid/:uid", async (req, res) => {
-    try {
-        const user = await User.findOne({ uid: req.params.uid });
-        if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
-        res.json(user);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
 
 module.exports = router;

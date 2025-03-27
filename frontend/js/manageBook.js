@@ -105,8 +105,8 @@ function createTableRow(data) {
         <td>${data.isbn}</td>
         <td>${data.editorial}</td>
         <td>${data.genero}</td>
-        <td>${data.añoPublicacion}</td>
-        <td>${data.autor}</td>
+        <td>${data.anio_publicacion}</td>
+        <td>${data.autor.cedula}</td>
 
         <td>
             <p class="d-inline-flex gap-1">
@@ -153,45 +153,48 @@ function populateTable(data) {
             isbn: item.isbn,
             editorial: item.editorial,
             genero: item.genero,
-            añoPublicacion: item.anio_publicacion,
-            autor: item.autor.cedula
+            anio_publicacion: item.anio_publicacion,
+            autor: item.autor
         });
         tableBody.appendChild(row);
     });
 
 }
 
-
-
-
 // inputs for update
-const inputCedula2 = document.getElementById('cedula-update');
-const inputNombreCompleto2 = document.getElementById('nombre-completo-update');
-const inputNacionalidad2 = document.getElementById('nacionalidad-update');
+const inputIsbn2 = document.getElementById('isbn-update');
+const inputEditorial2 = document.getElementById('editorial-update');
+const inputGenero2 = document.getElementById('genero-update');
+const inputAñoPublicacion2 = document.getElementById('año-publicacion-update');
+const inputAutor2 = document.getElementById('autor-update');
 
 // update
 function populateForm(data) {
 
-    inputCedula2.value = data.cedula;
-    inputNombreCompleto2.value = data.nombre_completo;
-    inputNacionalidad2.value = data.nacionalidad;
+    inputIsbn2.value = data.isbn;
+    inputEditorial2.value = data.editorial;
+    inputGenero2.value = data.genero;
+    inputAñoPublicacion2.value = data.anio_publicacion;
+    inputAutor2.value = data.autor.cedula;  // revisar
 
-    updateAutor = {
+    updateBook = {
         _id: data._id,
-        cedula: data.cedula,
-        nombre_completo: data.nombre_completo,
-        nacionalidad: data.nacionalidad
+        isbn: data.isbn,
+        editorial: data.editorial,
+        genero: data.genero,
+        anio_publicacion: data.anio_publicacion,
+        autor: data.autor
     }
 
-    addEventListener(updateAutor);
+    addEventListener(updateBook);
 }
 
-function addEventListener(updateAutor) {
+function addEventListener(updateBook) {
     const editButton = document.getElementById('btn-update-submit');
-    editButton.addEventListener('click', () => handlePutSubmit(updateAutor));
+    editButton.addEventListener('click', () => handlePutSubmit(updateBook));
 }
 
-async function handlePutSubmit(updateAutor) {
+async function handlePutSubmit(updateBook) {
     const putForm = document.getElementById('putForm');
 
     if (!putForm.checkValidity()) {
@@ -199,20 +202,20 @@ async function handlePutSubmit(updateAutor) {
         return;
     }
 
-    putAutor(updateAutor);
+    putLibro(updateBook);
 }
 
-async function putAutor(updateAutor) {
+async function putLibro(updateBook) {
 
-    const _id = updateAutor._id;
+    const _id = updateBook._id;
 
     try {
-        const response = await fetch(`http://localhost:3000/api/updateAutores/${_id}`, {
+        const response = await fetch(`http://localhost:3000/api/updateLibros/${_id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(updateAutor)
+            body: JSON.stringify(updateBook)
         });
 
         const responseData = await response.json();
@@ -224,7 +227,7 @@ async function putAutor(updateAutor) {
             putErrorAlert(responseData.error);
         }
     } catch (error) {
-        console.error("Error updating Autor", error);
+        console.error("Error updating Book", error);
         putErrorAlert();
     }
 }
@@ -266,7 +269,6 @@ async function deleteUser(deleteData) {
         deleteErrorAlert();
     }
 }
-
 
 // ALERTS
 
