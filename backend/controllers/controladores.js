@@ -253,4 +253,4 @@ const getCedulas = async (req, res) => {
   }
 }
 
-module.exports = { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername, getCedulas }; //Exportar funciones
+module.exports = { login, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername, getCedulas }; //Exportar funciones
