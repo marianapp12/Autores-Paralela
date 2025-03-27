@@ -290,4 +290,13 @@ const getUserByUsername = async (req, res) => {
   }
 }
 
-module.exports = { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername }; //Exportar funciones
+const getCedulas = async (req, res) => {
+  try {
+    const autores = await Autor.find().select('cedula');
+    res.json(autores);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+module.exports = { login, register, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername, getCedulas }; //Exportar funciones

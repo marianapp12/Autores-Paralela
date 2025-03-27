@@ -104,12 +104,12 @@
                                         placeholder="editorial" required minlength="2" maxlength="50"
                                         pattern="^[A-Za-z\s]+$">
                                     <label for="floating-editorial">Editorial *</label>
-                                    <div class="invalid-feedback">Please enter a valid editorial (between 2 and 50 letters)</div>
+                                    <div class="invalid-feedback">Please enter a valid editorial (between 2 and 50
+                                        letters)</div>
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="floating-genero"
-                                        placeholder="genero">
+                                    <input type="text" class="form-control" id="floating-genero" placeholder="genero">
                                     <label for="floating-genero">Genero *</label>
                                 </div>
 
@@ -118,18 +118,17 @@
                                         placeholder="año publicacion" required pattern="^\d{4}$">
                                     <label for="floating-año-publicacion">Año de publicacion *</label>
                                     <div class="invalid-feedback">Please enter a valid year (4 digits)</div>
-                                </div>                          
+                                </div>
 
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="floating-autor"
-                                        placeholder="autor" required>
+                                    <input type="text" class="form-control" id="floating-autor" placeholder="autor"
+                                        required>
                                     <label for="floating-autor">Autor *</label>
                                 </div>
 
                                 <p><em>* Required fields</em></p>
                                 <div class="d-grid gap-2 col-6 mx-auto">
-                                    <button type="submit" class="btn btn-primary"
-                                        id="btnRegisterBook">Register</button>
+                                    <button type="submit" class="btn btn-primary" id="btnRegisterBook">Register</button>
                                 </div>
 
                             </form>
@@ -137,9 +136,6 @@
                         </div>
                     </div>
                     <!-- collapse content register Book -->
-
-
-
 
                     <!-- tabla para visualizar -->
                     <div class="collapse envelope table-collapse" id="table-collapseUpdateLibro">
@@ -170,24 +166,37 @@
                             <form class="row g-3 needs-validation" id="putForm" onsubmit="return false" novalidate>
 
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="cedula-update" placeholder="cedula"
-                                        required pattern="^\d{8,10}$">
-                                    <label for="cedula-update">Cedula *</label>
-                                    <div class="invalid-feedback">Please enter a id between 8 and 10 digits</div>
+                                    <input type="text" class="form-control" id="isbn-update" placeholder="isbn"
+                                        required pattern="^\d{13}$">
+                                    <label for="isbn-update">ISBN *</label>
+                                    <div class="invalid-feedback">Please enter a isbn of 13 digits</div>
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="nombre-completo-update"
-                                        placeholder="nombre completo" required minlength="2" maxlength="50"
+                                    <input type="text" class="form-control" id="editorial-update"
+                                        placeholder="editorial" required minlength="2" maxlength="50"
                                         pattern="^[A-Za-z\s]+$">
-                                    <label for="nombre-completo-update">Nombre completo *</label>
-                                    <div class="invalid-feedback">Please enter a name between 2 and 50 letters</div>
+                                    <label for="editorial-update">Editorial *</label>
+                                    <div class="invalid-feedback">Please enter a valid editorial (between 2 and 50
+                                        letters)</div>
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="nacionalidad-update"
-                                        placeholder="nacionalidad">
-                                    <label for="nacionalidad-update">Nacionalidad *</label>
+                                    <input type="text" class="form-control" id="genero-update" placeholder="genero">
+                                    <label for="genero-update">Genero *</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="año-publicacion-update"
+                                        placeholder="año publicacion" required pattern="^\d{4}$">
+                                    <label for="año-publicacion-update">Año de publicacion *</label>
+                                    <div class="invalid-feedback">Please enter a valid year (4 digits)</div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="autor-update" placeholder="autor"
+                                        required>
+                                    <label for="autor-update">Autor *</label>
                                 </div>
 
                                 <div class="form-text">* Required fields</div>
@@ -217,7 +226,7 @@
                                         id="btn-update-cancel" onclick="putCancelAlert()">
                                         Cancel
                                     </button>
-                                    
+
                                 </div>
                             </form>
                             <!-- form register libro -->
