@@ -62,7 +62,6 @@ async function InsertUser() {
         }
 
         const data = await response.json();
-        console.log(data);
         postAlert();
 
     } catch (error) {
@@ -76,8 +75,6 @@ async function getUsers() {
     try {
         const response = await fetch('http://localhost:3000/api/getUsers');
         const data = await response.json();
-
-        console.log("Datos recibidos en data de getUsers:", data)
 
         if (!response.ok) {
             console.error("Error: " + (data.error || "An error occurred"));
@@ -93,8 +90,6 @@ async function getUsers() {
 }
 
 function createTableRow(data) {
-
-    console.log("Datos recibidos en createTableRow:", data)
 
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -128,8 +123,6 @@ function createTableRow(data) {
 
 function addEventListeners(data, row) {
 
-    console.log("Datos recibidos en addEventListeners:", data)
-
     const editButton = row.querySelector('.edit-btn');
     editButton.addEventListener('click', () => populateForm(data));
 
@@ -139,8 +132,6 @@ function addEventListeners(data, row) {
 
 function populateTable(data) {
     const id = 'tbody-update-user';
-
-    console.log("Datos recibidos en populateTable:", data)
 
     const tableBody = document.getElementById(id);
     tableBody.innerHTML = '';
@@ -155,7 +146,6 @@ function populateTable(data) {
         tableBody.appendChild(row);
     });
 
-    console.log("Datos al final de populateTable:", data)
 }
 
 // inputs for update
@@ -165,8 +155,6 @@ const selectRole2 = document.getElementById('role-update');
 
 // update
 function populateForm(data) {
-
-    console.log("Datos recibidos en populateForm:", data)
 
     inputName2.value = data.username;
     inputPassword2.value = data.password;
@@ -200,11 +188,7 @@ async function handlePutSubmit(updateUser) {
 
 async function putUser(updateUser) {
 
-    console.log("Enviando datos al servidor:", updateUser)
-
     const _id = updateUser._id;
-
-    console.log("Datos enviados al servidor:", updateUser);
 
     try {
         const response = await fetch(`http://localhost:3000/api/updateUsers/${_id}`, {
@@ -233,22 +217,19 @@ async function putUser(updateUser) {
 
 
 
-
 // delete
-
 function handleDelete(data) {
+
     const deleteData = {};
 
-    deleteData.User_id = data.User_id;
-    deleteData.name = data.name;
-    deleteData.flag = data.photo_url || false;
+    deleteData._id = data._id;
 
     deleteUser(deleteData)
 }
 
 async function deleteUser(deleteData) {
     try {
-        const response = await fetch('/deleteUser', {
+        const response = await fetch(`http://localhost:3000/api/deleteUsers/${deleteData._id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -269,7 +250,6 @@ async function deleteUser(deleteData) {
         deleteErrorAlert();
     }
 }
-
 
 
 // ALERTS
