@@ -71,7 +71,11 @@ async function InsertAutor() {
     }
 }
 
-// traer usuarios
+
+
+
+
+// traer autores
 async function getAuthors() {
     try {
         const response = await fetch('http://localhost:3000/api/getAutores');
@@ -79,14 +83,14 @@ async function getAuthors() {
 
         if (!response.ok) {
             console.error("Error: " + (data.error || "An error occurred"));
-            getUsersErrorAlert(data.error);
+            getAutorsErrorAlert(data.error);
         }
 
         populateTable(data);
         collapse()
     } catch (error) {
-        console.error("Error getting Users", error);
-        getUsersErrorAlert();
+        console.error("Error getting autores", error);
+        getAutorsErrorAlert();
     }
 }
 
@@ -95,8 +99,10 @@ function createTableRow(data) {
     const row = document.createElement('tr');
     row.innerHTML = `
         <th scope="row">${data._id}</th>
-        <td>${data.username}</td>
-        <td>${data.tipo}</td>
+        <td>${data.cedula}</td>
+        <td>${data.nombre_completo}</td>
+        <td>${data.nacionalidad}</td>
+        <td>${data.libros.length}</td>
 
         <td>
             <p class="d-inline-flex gap-1">
@@ -132,7 +138,7 @@ function addEventListeners(data, row) {
 }
 
 function populateTable(data) {
-    const id = 'tbody-update-user';
+    const id = 'tbody-update-autor';
 
     const tableBody = document.getElementById(id);
     tableBody.innerHTML = '';
@@ -140,9 +146,10 @@ function populateTable(data) {
         // el row debe tener todos los datos de data (campos del schema)
         const row = createTableRow({
             _id: item._id,
-            username: item.username,
-            password: item.password,
-            tipo: item.tipo,
+            cedula: item.cedula,
+            nombre_completo: item.nombre_completo,
+            nacionalidad: item.nacionalidad,
+            libros: item.libros
         });
         tableBody.appendChild(row);
     });
@@ -257,7 +264,7 @@ async function deleteUser(deleteData) {
 
 //// GET ALERTS
 
-function getUsersErrorAlert(message) {
+function getAutorsErrorAlert(message) {
     Swal.fire({
         icon: "error",
         title: message || "Error getting Users",
