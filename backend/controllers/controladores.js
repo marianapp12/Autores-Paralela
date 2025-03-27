@@ -1,7 +1,7 @@
 const { auth, signInWithEmailAndPassword } = require("../database/firebase");
 const User = require("../schemas/User");
 
-// const login = async (req, res) => {
+ const login = async (req, res) => {
 //     const { email, password } = req.body;
 
 //     try {
@@ -20,7 +20,7 @@ const User = require("../schemas/User");
 //     } catch (error) {
 //         res.status(400).json({ message: "Error en autenticación", error: error.message });
 //     }
-// };
+ };
 
 // Funcion para salir del programa
 const logout = (req, res) => {

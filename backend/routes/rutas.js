@@ -3,11 +3,13 @@ const User = require("../schemas/User");
 const router = express.Router();
 
 // importar controladores
-const { getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername } = require("../controllers/controladores");
+const { login, logout, getUsers, createUsers, updateUsers, deleteUsers, getAutores, createAutores, updateAutores, deleteAutores, getLibros, createLibros, updateLibros, deleteLibros, getAutorByCedula, getUserByUsername } = require("../controllers/controladores");
 
 /* Rutas */
 
 // sesion
+router.post("/login", login);
+router.post("/logout", logout);
 
 // usuario
 router.get("/getUsers", getUsers);
