@@ -145,6 +145,7 @@ function populateTable(data) {
     const tableBody = document.getElementById(id);
     tableBody.innerHTML = '';
     data.forEach((item, index) => {
+        // el row debe tener todos los datos de data (campos del schema)
         const row = createTableRow({
             _id: item._id,
             username: item.username,
@@ -156,10 +157,6 @@ function populateTable(data) {
 
     console.log("Datos al final de populateTable:", data)
 }
-
-
-
-
 
 // inputs for update
 const inputName2 = document.getElementById('username-update');
@@ -237,7 +234,7 @@ async function putUser(updateUser) {
 
 
 
-//// DELETE LOGIC
+// delete
 
 function handleDelete(data) {
     const deleteData = {};
