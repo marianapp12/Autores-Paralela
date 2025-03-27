@@ -107,7 +107,6 @@
                                     <div class="invalid-feedback">Please enter a name between 2 and 50 letters</div>
                                 </div>
 
-                                <!-- nacionalidad -->
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="floating-nacionalidad"
                                         placeholder="nacionalidad">
@@ -153,36 +152,25 @@
                         <div class="text-start p-5">
                             <form class="row g-3 needs-validation" id="putForm" onsubmit="return false" novalidate>
 
-                                <div class="col-md-4">
-                                    <label for="Autorname-update" class="form-label">Autorname *</label>
-                                    <input type="text" class="form-control" id="Autorname-update"
-                                        aria-describedby="name-update-help" required placeholder="Enter Name"
-                                        minlength="2" maxlength="50" pattern="^[A-Za-z\s]+$">
-                                    <div class="invalid-feedback">
-                                        Please enter a valid name (only letters, 2-50 characters)
-                                    </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="cedula-update" placeholder="cedula"
+                                        required pattern="^\d{8,10}$">
+                                    <label for="cedula-update">Cedula *</label>
+                                    <div class="invalid-feedback">Please enter a id between 8 and 10 digits</div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <label for="password-update" class="form-label">Password *</label>
-                                    <input type="password" class="form-control" id="password-update"
-                                        aria-describedby="password-update-help" required placeholder="Enter Password"
-                                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&\+._\-])(?=.*[0-9])[A-Za-z\d!@#$%&\+._\-]{8,}$">
-                                    <div class="invalid-feedback">
-                                        Password must be at least 8 characters long and must have
-                                        at least one uppercase
-                                        letter, one lowercase letter, one number and one special character
-                                    </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="nombre-completo-update"
+                                        placeholder="nombre completo" required minlength="2" maxlength="50"
+                                        pattern="^[A-Za-z\s]+$">
+                                    <label for="nombre-completo-update">Nombre completo *</label>
+                                    <div class="invalid-feedback">Please enter a name between 2 and 50 letters</div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <label for="role-update" class="form-label">Role *</label>
-                                    <select class="form-select" id="role-update" required>
-                                        <option selected disabled value="">Select Role</option>
-                                        <option value="admin">admin</option>
-                                        <option value="empleado">empleado</option>
-                                    </select>
-                                    <div class="invalid-feedback">Please select a role</div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="nacionalidad-update"
+                                        placeholder="nacionalidad">
+                                    <label for="nacionalidad-update">Nacionalidad *</label>
                                 </div>
 
                                 <div class="form-text">* Required fields</div>
@@ -198,17 +186,21 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
+
                                     <button class="btn btn-info btn-lg edit-btn" type="button" aria-expanded="false"
                                         id="btn-update-submit">
                                         Submit
                                     </button>
+
                                     <button class="btn btn-danger btn-lg edit-btn" type="button"
                                         data-bs-toggle="collapse" data-bs-target="#table-collapseUpdateAutor"
                                         aria-expanded="false" aria-controls="table-collapseUpdateAutor"
                                         id="btn-update-cancel" onclick="putCancelAlert()">
                                         Cancel
                                     </button>
+                                    
                                 </div>
                             </form>
                             <!-- form register autors -->

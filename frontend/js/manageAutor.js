@@ -107,8 +107,8 @@ function createTableRow(data) {
         <td>
             <p class="d-inline-flex gap-1">
                 <button class="btn btn-outline-info btn-lg edit-btn" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseUpdateUser" aria-expanded="false"
-                    aria-controls="collapseUpdateUser">
+                    data-bs-target="#collapseUpdateAutor" aria-expanded="false"
+                    aria-controls="collapseUpdateAutor">
                     Edit
                 </button>
             </p>
@@ -156,34 +156,37 @@ function populateTable(data) {
 
 }
 
+
+
+
 // inputs for update
-const inputName2 = document.getElementById('username-update');
-const inputPassword2 = document.getElementById('password-update');
-const selectRole2 = document.getElementById('role-update');
+const inputCedula2 = document.getElementById('cedula-update');
+const inputNombreCompleto2 = document.getElementById('nombre-completo-update');
+const inputNacionalidad2 = document.getElementById('nacionalidad-update');
 
 // update
 function populateForm(data) {
 
-    inputName2.value = data.username;
-    inputPassword2.value = data.password;
-    selectRole2.value = data.tipo;
+    inputCedula2.value = data.cedula;
+    inputNombreCompleto2.value = data.nombre_completo;
+    inputNacionalidad2.value = data.nacionalidad;
 
-    updateUser = {
+    updateAutor = {
         _id: data._id,
-        username: data.username,
-        password: data.password,
-        tipo: data.tipo
+        cedula: data.cedula,
+        nombre_completo: data.nombre_completo,
+        nacionalidad: data.nacionalidad
     }
 
-    addEventListener(updateUser);
+    addEventListener(updateAutor);
 }
 
-function addEventListener(updateUser) {
+function addEventListener(updateAutor) {
     const editButton = document.getElementById('btn-update-submit');
-    editButton.addEventListener('click', () => handlePutSubmit(updateUser));
+    editButton.addEventListener('click', () => handlePutSubmit(updateAutor));
 }
 
-async function handlePutSubmit(updateUser) {
+async function handlePutSubmit(updateAutor) {
     const putForm = document.getElementById('putForm');
 
     if (!putForm.checkValidity()) {
@@ -191,20 +194,20 @@ async function handlePutSubmit(updateUser) {
         return;
     }
 
-    putUser(updateUser);
+    putAutor(updateAutor);
 }
 
-async function putUser(updateUser) {
+async function putAutor(updateAutor) {
 
-    const _id = updateUser._id;
+    const _id = updateAutor._id;
 
     try {
-        const response = await fetch(`http://localhost:3000/api/updateUsers/${_id}`, {
+        const response = await fetch(`http://localhost:3000/api/updateAutores/${_id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(updateUser)
+            body: JSON.stringify(updateAutor)
         });
 
         const responseData = await response.json();
@@ -216,7 +219,7 @@ async function putUser(updateUser) {
             putErrorAlert(responseData.error);
         }
     } catch (error) {
-        console.error("Error updating user", error);
+        console.error("Error updating Autor", error);
         putErrorAlert();
     }
 }

@@ -169,17 +169,22 @@ const updateAutores = async (req, res) => {
   const { cedula, nombre_completo, nacionalidad } = req.body;
 
   try {
-    const autorUpdated = await Autor.findByIdAndUpdate(id, {
-      cedula,
-      nombre_completo,
-      nacionalidad,
-    });
+    const autorUpdated = await Autor.findByIdAndUpdate(
+      id, 
+      { cedula, nombre_completo, nacionalidad }, 
+      { new: true } // ✅ Devuelve el documento actualizado
+    );
+
+    if (!autorUpdated) {
+      return res.status(404).json({ message: "Autor not found" }); // ✅ Manejo de error si no se encuentra
+    }
 
     res.json(autorUpdated);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
+
 
 const deleteAutores = async (req, res) => {
   const { id } = req.params;
