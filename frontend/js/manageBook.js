@@ -101,7 +101,6 @@ function createTableRow(data) {
 
     const row = document.createElement('tr');
     row.innerHTML = `
-        <th scope="row">${data._id}</th>
         <td>${data.isbn}</td>
         <td>${data.editorial}</td>
         <td>${data.genero}</td>
