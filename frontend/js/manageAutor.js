@@ -98,9 +98,8 @@ function createTableRow(data) {
 
     const row = document.createElement('tr');
     row.innerHTML = `
-        <th scope="row">${data._id}</th>
-        <td>${data.cedula}</td>
         <td>${data.nombre_completo}</td>
+        <td>${data.cedula}</td>
         <td>${data.nacionalidad}</td>
         <td>${data.libros.length}</td>
 
